@@ -37,6 +37,10 @@ public class Principal {
 			            } catch (Exception e) {									//CONTROL ERROR WRONG ENTRY
 			            	
 				           System.out.println("ERROR --- You must enter a number.");		
+			            	
+				           System.out.println(e);		
+				           
+							
 				           option=-1;
 					    }
 					
@@ -65,12 +69,15 @@ public class Principal {
 				
 				case 3:
 					try {
+						
 						viewClient(clients);				//SHOW DETAILS USER
 						
 						} catch (Field_Error e) {
+							
 								System.out.println(e);
 							
-						} catch (Url_Erronea e) {					
+						} catch (Url_Erronea e) {		
+							
 								System.out.println(e);	
 					}									
 				break;	
@@ -360,10 +367,10 @@ public class Principal {
 					
 				try {
 						
-					isOk= verifyURL(url);
+					isOk= verifyURL(url);					
 						
 				} catch (Url_Erronea e) {
-					System.out.println(e);
+					System.out.println(e.getMsj());
 				}
 					
 			}while(isOk==false || isEmpty==true);
@@ -871,12 +878,14 @@ public class Principal {
 		char letter;
 		int iW=0, iDot=0;
 		boolean isOk=true;
+		int error=-1;
 			
 			
-			
+		
 		if (url.length()<10) {								//CHECK LENGTH
 			isOk=false;
-			throw new Url_Erronea("Url must contain a minimun length of 9");		
+			error=1;
+			throw new Url_Erronea(error);		
 				
 		}else{
 				
@@ -893,13 +902,16 @@ public class Principal {
 		}
 			
 		if (iDot!=2) {
-			isOk=false;			
-			throw new Url_Erronea("La url must contain two dots");
+			isOk=false;		
+			error=2;			
+			throw new Url_Erronea(error);
 		}
 			
 		if (iW!=3) {
 			isOk=false;
-			throw new Url_Erronea("La url must contain www");
+			error=3;			
+			throw new Url_Erronea(error);
+
 
 		}
 		return isOk;					//RETURN BOOLEN true or false
